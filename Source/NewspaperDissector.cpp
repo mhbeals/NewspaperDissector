@@ -184,15 +184,12 @@ void articleInput()
 		cin >> issues[f].year;
 
 		// Set issue name for log file
-		ofstream issuefile("log_" 
-			+ issues[f].title 
-			+ "_" 
-			+ to_string(issues[f].year) 
-			+ "_" 
-			+ to_string(issues[f].month) 
-			+ "_" 
-			+ to_string(issues[f].day) 
-			+ ".txt");
+		string logaddress = "log_"
+			+ to_string(issues[f].year)
+			+ to_string(issues[f].month)
+			+ to_string(issues[f].day)
+			+ issues[f].title
+			+ ".txt";
 
 		// Reset page counter
 		g = 0;
@@ -237,39 +234,37 @@ void articleInput()
 					issues[f].pages[g].columns[h].articles[i].position = i + 1;
 
 					// Populate Type
-					cout << "What is the article type?" << endl;
+					cout << "Type:" << endl;
 					cin.ignore();
 					getline(cin, issues[f].pages[g].columns[h].articles[i].type);
 
 					// Populate Topic
-					cout << "What is the article topic?" << endl;
+					cout << "Topic:" << endl;
 					getline(cin, issues[f].pages[g].columns[h].articles[i].topic);
 
 					// Populate Geo
-					cout << "Where is the article describing?" << endl;
+					cout << "Location Mentioned:" << endl;
 					getline(cin, issues[f].pages[g].columns[h].articles[i].geo);
 
-					// Populate Word Count
-					cout << "What is the article?" << endl;
-					getline(cin, issues[f].pages[g].columns[h].articles[i].text);
-					issues[f].pages[g].columns[h].articles[i].wc 
-						= wordcount(issues[f].pages[g].columns[h].articles[i].text);
-
 					// Populate Source
-					cout << "What is its source?" << endl;
+					cout << "Source Mentioned:" << endl;
+					getline(cin, issues[f].pages[g].columns[h].articles[i].flag);
+
+					// Populate Text and Word Count
+					cout << "Article Text:" << endl;
 					getline(cin, issues[f].pages[g].columns[h].articles[i].text);
-					issues[f].pages[g].columns[h].articles[i].wc 
-						= wordcount(issues[f].pages[g].columns[h].articles[i].flag);
+					issues[f].pages[g].columns[h].articles[i].wc = 
+						wordcount(issues[f].pages[g].columns[h].articles[i].text);
+
 
 					// Print snippet log
-					string logdata =
-						issues[f].title
-						+ "_"
-						+ to_string(issues[f].year)
-						+ "_"
+					string logdata = to_string(issues[f].year)
+						+ "\t"
 						+ to_string(issues[f].month)
-						+ "_"
+						+ "\t"
 						+ to_string(issues[f].day)
+						+ "\t"
+						+ issues[f].title
 						+ "\t"
 						+ to_string(issues[f].pages[g].position)
 						+ "\t"
@@ -277,18 +272,16 @@ void articleInput()
 						+ "\t"
 						+ to_string(issues[f].pages[g].columns[h].articles[i].position)
 						+ "\t"
+						+ issues[f].pages[g].columns[h].articles[i].flag
+						+ "\t"
 						+ issues[f].pages[g].columns[h].articles[i].text
 						+ "\t"
 						+ to_string(issues[f].pages[g].columns[h].articles[i].wc)
 						+ "\n";
 
 					// Print graph matrix
-					issuefile.open("log_" 
-						+ to_string(issues[f].year) 
-						+ to_string(issues[f].month) 
-						+ to_string(issues[f].day) 
-						+ issues[f].title
-						+ ".txt", ios::app);
+					fstream issuefile;
+					issuefile.open(logaddress, fstream::app);
 					issuefile << logdata; // add entry to log
 					issuefile.close(); // Closing the file
 
