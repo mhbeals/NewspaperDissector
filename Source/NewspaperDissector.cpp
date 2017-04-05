@@ -188,6 +188,7 @@ void articleInput()
 			+ to_string(issues[f].year)
 			+ to_string(issues[f].month)
 			+ to_string(issues[f].day)
+			+ "_"
 			+ issues[f].title
 			+ ".txt";
 
