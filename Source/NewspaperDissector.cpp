@@ -196,6 +196,7 @@ void articleInput()
 
 		// For each page
 		do {
+			
 			// Create page struct
 			page empty;
 			issues[f].pages.push_back(empty);
@@ -216,7 +217,7 @@ void articleInput()
 				cout << "You are working on column " 
 					<< issues[f].pages[g].columns[h].position 
 					<< " of page " 
-					<< issues[f].pages[g].columns[g].position 
+					<< issues[f].pages[g].position 
 					<< endl 
 					<< endl;
 
@@ -319,13 +320,14 @@ void articleInput()
 				<< ". Would you like to continue entering pages? (y or n) " 
 				<< endl;
 			cin >> cont;
-			++g;
-
+			
+			++g; // Advance page counter
+			
 		} while (cont == "y");
 
 		cout << "Would you like to continue entering issues?" << endl;
 		cin >> cont;
-
+		cin.ignore();
 	} while (cont == "y");
 
 };
