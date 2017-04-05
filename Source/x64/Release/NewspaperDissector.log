@@ -1,8 +1,4 @@
-﻿  stdafx.cpp
-  NewspaperDissector.cpp
-NewspaperDissector.cpp(79): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-NewspaperDissector.cpp(102): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating code
+﻿  Generating code
   All 620 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   NewspaperDissector.vcxproj -> D:\Users\M. H. Beals\Documents\GitHub\NewspaperDissector\x64\Release\NewspaperDissector.exe
