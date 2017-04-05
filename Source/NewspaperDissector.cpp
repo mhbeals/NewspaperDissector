@@ -1,5 +1,5 @@
 // Newspaper Dissector
-// M. H. Beals (2017) v.0.1.0 [Software]
+// M. H. Beals (2017) v.0.1.5 [Software]
 
 // MIT License
 
@@ -167,6 +167,28 @@ void articleInput()
 		issues.push_back(empty);
 		issues[f].position = f + 1;
 
+		cout << "Welcome to the Newspaper Dissector" << endl;
+		system("pause");
+		system("cls");
+
+		cout << "This programme will provide you with two files:"
+			<< endl
+			<< "     a) a log of your entries"
+			<< endl
+			<< "     b) a matrix of your wordcounts"
+			<< endl;
+		system("pause");
+		system("cls");
+
+		cout << "The log file will update after each article"
+			<< endl
+			<< "The matrix file will only update after each page."
+			<< endl
+			<< "For best results, complete whole issues before stopping the programme."
+			<< endl;
+		system("pause");
+		system("cls");
+
 		// Populate Title
 		cout << "What is the newspaper title? " << endl;
 		getline(cin, issues[f].title);
@@ -274,6 +296,12 @@ void articleInput()
 						+ "\t"
 						+ to_string(issues[f].pages[g].columns[h].articles[i].position)
 						+ "\t"
+						+ issues[f].pages[g].columns[h].articles[i].type
+						+ "\t"
+						+ issues[f].pages[g].columns[h].articles[i].topic
+						+ "\t"
+						+ issues[f].pages[g].columns[h].articles[i].geo
+						+ "\t"
 						+ issues[f].pages[g].columns[h].articles[i].flag
 						+ "\t"
 						+ issues[f].pages[g].columns[h].articles[i].text
@@ -347,6 +375,8 @@ int main()
 		| FOREGROUND_RED | FOREGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_INTENSITY);
 
 	system("cls");
+
+
 
 	articleInput(); // start process
 
