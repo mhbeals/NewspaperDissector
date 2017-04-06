@@ -1,5 +1,5 @@
 // Newspaper Dissector
-// M. H. Beals (2017) v.0.1.5 [Software]
+// M. H. Beals (2017) v.0.1.6 [Software]
 
 // MIT License
 
@@ -100,10 +100,10 @@ void listMaker(int maxarticleno) {
 	string pagedata = "["; // start list of lists
 	int currcol = 0; // first column
 	int columnlist = issues[f].pages[g].columns.size() - 1; // last column
-	int currart = 0; // first article
 	int articlelist = maxarticleno - 1; // last article	
+	int currart = articlelist; // first article to process (last one entered)
 
-	while (currart <= articlelist)
+	while (currart >= 0)
 	{
 		pagedata = pagedata + "["; // create list of article word counts
 
@@ -134,7 +134,7 @@ void listMaker(int maxarticleno) {
 		}
 		currcol = 0; // reset column counter
 
-		if (currart == articlelist) 
+		if (currart == 0) 
 			// if it is the last article (of the most populated column)
 		{
 			pagedata = pagedata + "]"; // end the list of lists
@@ -144,17 +144,20 @@ void listMaker(int maxarticleno) {
 			pagedata = pagedata + ","; // add a comma
 		}
 
-		++currart; // advanced to next article counter
+		--currart; // advanced to next article counter (down one number)
 	}
 	
-	// open log file
+	// open matrix file
 	ofstream matrixfile("matrix_" 
 			+ to_string(issues[f].year) 
 			+ to_string(issues[f].month) 
 			+ to_string(issues[f].day) 
-			+ "_" + issues[f].title 
+			+ "_" 
+			+ to_string(issues[f].pages[g].position)
+			+ "_" 
+			+ issues[f].title 
 			+ ".txt");
-	matrixfile << pagedata; // add record to logfile
+	matrixfile << pagedata; // save matrix file
 	pagedata = ""; // reset log
 
 }
