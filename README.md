@@ -44,7 +44,7 @@ To use the Newspaper Dissector, place the executable file (NewspaperDissector.ex
 
 **An example line of the file is as follows:**
 
-'1820	6	15	Caledonian Mercury	1	1	1	Advert	Meeting	Dumfries	Dumfries	l	r	"This is an example article text"'
+`1820	6	15	Caledonian Mercury	1	1	1	Advert	Meeting	Dumfries	Dumfries	l	r	"This is an example article text"`
 
 Please report any errors or exceptions to the author, [M. H. Beals](m.h.beals@lboro.ac.uk)
 
