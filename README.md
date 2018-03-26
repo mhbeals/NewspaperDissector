@@ -1,6 +1,6 @@
 # Newspaper Dissector v.0.2.1.0
 
-The *Newspaper Dissector* is visualisation software for categorising and visualising newspaper pages based on topic, word count and source.
+The *Newspaper Dissector* is visualisation software for categorising and visualising newspaper pages based on topic, word count and source. Based upon code built at the Software Sustainability Institute's 2017 Collaboration Workshop with the support of Geraint Palmer and Vince Knight (Cardiff University).
 
 An example of its use can be seen in the [Anatomy of a Newspaper blog series](http://mhbeals.com/anatomy-of-a-newspaper-the-caledonian-mercury-20-june-1825/)
 
