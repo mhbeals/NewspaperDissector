@@ -1,0 +1,18 @@
+cff-version: 1.0.3
+message: If you use this software, please cite it as below.
+authors:
+  - family-names: Beals
+    given-names: M. H.
+    orcid: https://orcid.org/0000-0002-2907-3313
+    affiliation: "Loughborough University"
+    email: "m.h.beals@lboro.ac.uk"
+    website: http://www.mhbeals.com
+  - family-names: Palmer
+    given-names: Geraint
+    affiliation: "Cardiff University"
+    email: "palmergi1@cardiff.ac.uk"
+    website: http://www.geraintianpalmer.org.uk/
+title: Newspaper Dissector
+version: 0.2.1
+doi: 10.5281/zenodo.1206930
+date-released: 2018-03-25
