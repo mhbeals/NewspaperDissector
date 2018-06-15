@@ -1,4 +1,4 @@
-# Newspaper Dissector v.0.2.1.0
+# Newspaper Dissector v.0.2.2.0
 
 The *Newspaper Dissector* is visualisation software for categorising and visualising newspaper pages based on topic, word count and source. Based upon code built at the Software Sustainability Institute's 2017 Collaboration Workshop with the support of Geraint Palmer and Vince Knight (Cardiff University).
 
@@ -44,7 +44,13 @@ To use the Newspaper Dissector, place the executable file (NewspaperDissector.ex
 
 **An example line of the file is as follows:**
 
-`1820	6	15	Caledonian Mercury	1	1	1	Advert	Meeting	Dumfries	Dumfries	l	r	"This is an example article text"`
+    1820	6	15	Caledonian Mercury	1	1	1	Advert	Meeting	Dumfries	Dumfries	l	r	"Sample Text"
+    1820	6	15	Caledonian Mercury	1	1	2	Advert	Loan/Borrow	NA	Edinburgh	l	l	"Sample Text"
+    1820	6	15	Caledonian Mercury	1	1	3	Advert	Loan/Borrow	NA	Edinburgh	l	l	"Sample Text"
+    1820	6	15	Caledonian Mercury	1	1	4	Advert	Loan/Borrow	NA	Tain	l	r	"Sample Text"
 
 Please report any errors or exceptions to the author, [M. H. Beals](m.h.beals@lboro.ac.uk)
 
+## Changelog
+
+**v.0.2.2.0**: Fixed fatal error in compiled version
