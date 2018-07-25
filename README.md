@@ -34,14 +34,14 @@ This programme requires
   + Text values should not contain any line breaks ("\n") or tab markers ("\t")
   + Numeric values may be integers ("130") or decimal values ("3.4")
 
-**For example:**
+**[For example](https://github.com/mhbeals/NewspaperDissector/blob/v.0.3.3.0/Release/data.tsv):**
 
     1820_06_15_Caledonian Mercury	1	1	1	Meeting	r	"Sample Text"
     1820_06_15_Caledonian Mercury	1	1	2	Loan/Borrow	l	"Sample Text"
     1820_06_15_Caledonian Mercury	1	1	3	Loan/Borrow	l	"Sample Text"
     1820_06_15_Caledonian Mercury	1	1	4	Loan/Borrow	r	"Sample Text"
 
-**Or:**
+**[Or](https://github.com/mhbeals/NewspaperDissector/blob/v.0.3.3.0/Release/datanum.tsv):**
 
     1820_06_15_Caledonian Mercury	1	1	1	Meeting	r	1.5
     1820_06_15_Caledonian Mercury	1	1	2	Loan/Borrow	l	2.0
@@ -59,7 +59,7 @@ Example *data.tsv* and *datanum.tsv* files are included in the release directory
   + The key can be any single character
   + The key will be matched to keys given in the data file to colourise the final visualisation
 
-**For example:**
+**[For example](https://github.com/mhbeals/NewspaperDissector/blob/v.0.3.3.0/Release/legend.tsv):**
 
 	News	a
 	Commentary	b
