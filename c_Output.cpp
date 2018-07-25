@@ -199,10 +199,10 @@ void c_Output::graphicMaker(std::string colourFlag)
 	std::string filename;
 
 	// remove spaces from title
-	transformationInstance.currentCopy.title.erase(std::remove(transformationInstance.currentCopy.title.begin(), transformationInstance.currentCopy.title.end(), ' '), transformationInstance.currentCopy.title.end()); 
+	transformationInstance.currentCopy.documentID.erase(std::remove(transformationInstance.currentCopy.documentID.begin(), transformationInstance.currentCopy.documentID.end(), ' '), transformationInstance.currentCopy.documentID.end()); 
 	
 	// create filename stub
-	std::string filenameStub = transformationInstance.currentCopy.title + "_" + std::to_string(transformationInstance.currentCopy.year) + std::to_string(transformationInstance.currentCopy.month) + std::to_string(transformationInstance.currentCopy.day);
+	std::string filenameStub = transformationInstance.currentCopy.documentID;
 	
 	// declare and start python script variable
 	std::string pythonScript = "import matplotlib.pyplot as plt" + lineBreak
@@ -266,7 +266,7 @@ void c_Output::graphicMaker(std::string colourFlag)
 		else if (colourFlag == "P") { pythonScript = pythonScript + "Patterned_"; }
 
 		// complete python script
-		pythonScript = pythonScript + filenameStub + "_" + std::to_string(transformationInstance.currentCopy.pages[g].position) + ".png\", bbox_inches='tight')";
+		pythonScript = pythonScript + filenameStub + "_" + std::to_string(transformationInstance.currentCopy.pages[g].position) + ".png\", bbox_inches='tight')" + lineBreak;
 	}
 
 	// set colour spectrum prefix to filename of visualisation script
@@ -288,7 +288,8 @@ void c_Output::graphicMaker(std::string colourFlag)
 	// create windows batch file to run python script, with "python" command
 	std::fstream batchFilename;
 	batchFilename.open("createGraphics.bat", std::fstream::app);
-	filename = "python " + filename + "\npython legends.py\n";
+	filename = "python legends.py" + lineBreak 
+		+ "python " + filename + lineBreak;
 	batchFilename << filename;
 
 }

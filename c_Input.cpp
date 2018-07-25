@@ -38,16 +38,21 @@ void c_Input::loadFile(std::string inputDirectory, std::string inputFile)
 
 			edition.push_back(emptyEntry);
 			size_t current = edition.size() - 1;
-			edition[current].year = std::stoi(buffer[0]);
-			edition[current].month = std::stoi(buffer[1]);
-			edition[current].day = std::stoi(buffer[2]);
-			edition[current].title = buffer[3];
-			edition[current].page = std::stoi(buffer[4]);
-			edition[current].column = std::stoi(buffer[5]);
-			edition[current].snippet = std::stoi(buffer[6]);
-			edition[current].type = buffer[7];
-			edition[current].key_value = buffer[8];
-			edition[current].text = buffer[9];
+			edition[current].documentID = buffer[0];
+			edition[current].page = std::stoi(buffer[1]);
+			edition[current].column = std::stoi(buffer[2]);
+			edition[current].snippet = std::stoi(buffer[3]);
+			edition[current].type = buffer[4];
+			edition[current].key_value = buffer[5];
+			if (dataFlag == "T")
+			{
+				edition[current].text = buffer[6];
+			}
+			
+			else if (dataFlag == "N")
+			{
+				edition[current].wordcount = std::stof(buffer[6]);
+			}
 			buffer.clear();
 		}
 	}

@@ -10,8 +10,8 @@
 //                                                                                                     
 //                                                                                                     
 
-int c_Transformation::wordcount(std::string text) {
-	int spaces = 0; // start with assumption of 0 spaces in the article
+float c_Transformation::wordcount(std::string text) {
+	float spaces = 0; // start with assumption of 0 spaces in the article
 	for (size_t j = 0; j < size(text); ++j) // for each character in the text
 	{
 		if (text[j] == char(32)) // check to see if it is a space
@@ -26,10 +26,7 @@ int c_Transformation::wordcount(std::string text) {
 void c_Transformation::transformVector()
 {
 	// Create basic structure
-	currentCopy.day = inputInstance.edition[0].day;
-	currentCopy.month = inputInstance.edition[0].month;
-	currentCopy.year = inputInstance.edition[0].year;
-	currentCopy.title = inputInstance.edition[0].title;
+	currentCopy.documentID = inputInstance.edition[0].documentID;
 	for (int i = 0; i < inputInstance.edition[inputInstance.edition.size() - 1].page; i++)
 	{
 		currentCopy.pages.push_back(emptyPage);
@@ -54,8 +51,19 @@ void c_Transformation::transformVector()
 			currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].position = currentSnippet;
 			currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].type = inputInstance.edition[i].type;
 			currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].key_value = inputInstance.edition[i].key_value;
-			currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].text = inputInstance.edition[i].text;
-			currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].wc = wordcount(inputInstance.edition[i].text);
+			if (inputInstance.dataFlag == "T")
+			{
+				currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].text = inputInstance.edition[i].text;
+				currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].wc = wordcount(inputInstance.edition[i].text);
+			}
+
+			else if (inputInstance.dataFlag == "N")
+			{
+				currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].text = "";
+				currentCopy.pages[currentPage].columns[currentColumn].articles[currentSnippet - 1].wc = inputInstance.edition[i].wordcount;
+			}
+			
+			
 		}
 	}
 }

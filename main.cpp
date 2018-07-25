@@ -1,5 +1,5 @@
 // Newspaper Dissector
-// M. H. Beals (2018) v.0.3.2 [Software]
+// M. H. Beals (2018) v.0.3.3 [Software]
 
 // MIT License
 // Copyright(c) 2018 M. H. Beals
@@ -25,11 +25,13 @@
 #include "c_Output.h"
 
 // Shared User Variables
-std::string inputDirectory = "c:\\";
-std::string inputFile = "data.tsv";
-std::string legendFile = "legend.tsv";
-std::string responseValue = "S";
-std::string colourFlag = "S";
+std::string inputDirectory = "c:\\"; // Default working directory
+std::string inputFile = "data.tsv"; // Default data file
+std::string legendFile = "legend.tsv"; // Default legend file
+
+// Congifuration Defaults
+std::string responseValue = "S"; // Start, or no user responses given yet
+std::string colourFlag = "S"; // Start, or not yet set
 
 // Create a Containers
 c_LegendCreation legendInstance;
@@ -77,6 +79,15 @@ int main()
 				// Collect input filename each time
 				std::cout << "\nWhat is the name of your input file? ";
 				std::cin >> inputFile;
+
+				// Set the data file type
+				do
+				{
+					std::cout << "\nDoes this file include (T)ext or a (N)umeric value, such as line count, to determine snippet size? ";
+					std::cin >> inputInstance.dataFlag;
+				} while (inputInstance.dataFlag != "T" && inputInstance.dataFlag != "N");
+
+				// Encourage user to configure the legend
 				std::cout << "\nwould you like to set the Legend file? (y/n)";
 				std::cin >> responseValue;
 

@@ -8,17 +8,14 @@ private:
 	// Edition Entry Variables
 	struct editionEntry
 	{
-		int year;
-		int month;
-		int day;
-		std::string title;
+		std::string documentID;
 		int page;
 		int column;
 		int snippet;
 		std::string type;
 		std::string key_value;
 		std::string text;
-		int wordcount;
+		float wordcount;
 	};
 	std::vector <std::string> buffer;
 	editionEntry emptyEntry;
@@ -30,6 +27,9 @@ public:
 
 	// Containers
 	std::vector <editionEntry> edition;
+
+	// Configuration Flags
+	std::string dataFlag = "T"; // Text inputted, word count automatically calculated
 };
 
 

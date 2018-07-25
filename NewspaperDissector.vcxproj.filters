@@ -52,17 +52,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="Resource.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="citation.cff">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="README.md">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
