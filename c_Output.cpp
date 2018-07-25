@@ -72,6 +72,80 @@ std::string c_Output::colouriser(int g, int columnlist, int articlelist, std::st
 	return pagedata;
 }
 
+std::string c_Output::patterniser(int g, int columnlist, int articlelist, std::string colourFlag)
+{
+	std::string pagedata = ""; // create page data variable
+	int currart = articlelist; // first article to process (last one entered)
+	int flagInt = 0;
+	int currcol = 0;
+	std::vector <std::string> patternScheme;
+	
+	patternScheme.push_back("\' \'");
+	patternScheme.push_back("\'\\\\\'");
+	patternScheme.push_back("\'||\'");
+	patternScheme.push_back("\'//\'");
+	patternScheme.push_back("\'+\'");
+	patternScheme.push_back("\'-\'");
+	patternScheme.push_back("\'=\'");
+	patternScheme.push_back("\'*\'");
+	patternScheme.push_back("\'o\'");
+	patternScheme.push_back("\'O\'");
+
+	while (currart >= 0)
+	{
+		while (currcol <= columnlist) // for each column on the page
+		{
+			if (currcol == 0)
+			{
+				pagedata = pagedata + "[";
+			}
+			if (currart > int(transformationInstance.currentCopy.pages[g].columns[currcol].articles.size()) - 1)
+				// if it doesn't have a word count
+			{
+				pagedata = pagedata + "0"; // use 0
+			}
+			else {
+				// if it does have a word count
+				std::string key_value = transformationInstance.currentCopy.pages[g].columns[currcol].articles[currart].key_value;
+
+				for (size_t i = 0; i < legendInstance.legendEntries.size(); i++)
+				{
+					if (key_value == legendInstance.legendEntries[i].keyCharacter)
+					{
+						pagedata = pagedata + patternScheme[i]; // use legend colour
+					}
+				}
+			}
+
+			if (currcol == columnlist) // if it is the last column on the page
+			{
+				pagedata = pagedata + "]"; // end the article list
+			}
+			else // if its not
+			{
+				pagedata = pagedata + ","; // add comma
+			}
+
+			++currcol; // advance to next column
+		}
+		currcol = 0; // reset column counter
+
+		if (currart == 0)
+			// if it is the last article (of the most populated column)
+		{
+			pagedata = pagedata + "]"; // end the list of lists
+		}
+		else // if it isn't the last article
+		{
+			pagedata = pagedata + ","; // add a comma
+		}
+
+		--currart; // advanced to next article counter (down one number)
+
+	}
+	return pagedata;
+}
+
 std::string c_Output::wordCountiser(int g, int columnlist, int articlelist)
 {
 	std::string pagedata = "["; // create page data variable
@@ -236,25 +310,57 @@ void c_Output::graphicMaker(std::string colourFlag)
 		// add label matrix to python file
 		pythonScript = pythonScript + "values_text = " + pageData + lineBreak;
 
+		if (colourFlag == "P")
+		{
+			// create pattern matrix
+			pageData = patterniser(g, columnlist, articlelist, colourFlag);
+
+			// add pattern matrix to python file
+			pythonScript = pythonScript + "values_pattern = [" + pageData + lineBreak;
+		}
+
 		// add general python scripting
-		pythonScript = pythonScript 
+		pythonScript = pythonScript
 			+ "max_cols = len(values)" + lineBreak
 			+ "max_rows = len(values[0])" + lineBreak
 			+ "values_sums = [sum([r[i] for r in values]) for i in range(max_rows)]" + lineBreak
 			+ "values_norm = [[v / values_sums[i] for i, v in enumerate(row)] for row in values]" + lineBreak
 			+ "fig, ax = plt.subplots(1, figsize = (12, 20))" + lineBreak
-			+ "for row_num in range(max_cols) :" + lineBreak 
-			+ tab + "ax.bar(range(max_rows), values_norm[row_num], bottom = [sum([values_norm[i][j] for i in range(row_num)]) for j in range(max_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+			+ "for row_num in range(max_cols) :" + lineBreak;
+		
 
-		// add colour spectrum type
-		if (colourFlag == "F") { pythonScript = pythonScript + "Paired"; }
-		else if (colourFlag == "C") { pythonScript = pythonScript + "Set1"; }
-		else if (colourFlag == "G") { pythonScript = pythonScript + "gray"; }
-		else if (colourFlag == "P") { pythonScript = pythonScript + "gray"; }
+		if (colourFlag != "P")
+		{
+			pythonScript = pythonScript + tab + "ax.bar(range(max_rows), values_norm[row_num], bottom = [sum([values_norm[i][j] for i in range(row_num)]) for j in range(max_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
-		// add general python scripting
-		pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak
-			+ "ax.set_xlim(-0.5, max_rows - 0.5)\nax.set_xticks([])\nax.set_yticks([])" + lineBreak
+			// add colour spectrum type
+			if (colourFlag == "F") { pythonScript = pythonScript + "Paired"; }
+			else if (colourFlag == "C") { pythonScript = pythonScript + "Set1"; }
+			else if (colourFlag == "G") { pythonScript = pythonScript + "Greys"; }
+			else if (colourFlag == "P") { pythonScript = pythonScript + "Greys"; }
+
+			// add general python scripting
+			pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak;
+
+		}
+		if (colourFlag == "P")
+		{
+			pythonScript = pythonScript + tab + "bars = ax.bar(range(max_rows), values_norm[row_num], bottom = [sum([values_norm[i][j] for i in range(row_num)]) for j in range(max_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+
+			// add colour spectrum type
+			if (colourFlag == "F") { pythonScript = pythonScript + "Paired"; }
+			else if (colourFlag == "C") { pythonScript = pythonScript + "Set1"; }
+			else if (colourFlag == "G") { pythonScript = pythonScript + "Greys"; }
+			else if (colourFlag == "P") { pythonScript = pythonScript + "Greys"; }
+
+			// add general python scripting
+			pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak
+				+ tab + "for bar, pattern in zip(bars, values_pattern[row_num]):" + lineBreak
+				+ tab + tab + "bar.set_hatch(pattern)" + lineBreak;
+
+		}
+
+		pythonScript = pythonScript + "ax.set_xlim(-0.5, max_rows - 0.5)\nax.set_xticks([])\nax.set_yticks([])" + lineBreak
 			+ "ax.set_ylim(0, 1)\nfor x in range(max_rows) :\n\tfor y in range(max_cols) :" + lineBreak 
 			+ tab + tab + "if values[y][x] != 0.0:\n\t\t\t\tax.text(x, values_norm[y][x] / 2 + sum([values_norm[newy][x] for newy in range(y)]), values_text[y][x], fontsize = 10, ha='center', va='center', bbox=dict(facecolor='white', edgecolor='white', boxstyle='round,pad=.1'))" + lineBreak
 			+ "plt.savefig(\"";

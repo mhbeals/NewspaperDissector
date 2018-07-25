@@ -62,9 +62,9 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 	}
 	else if (legendColourScheme == "G")
 	{
-		pythonScript = pythonScript + "gray";
+		pythonScript = pythonScript + "Greys";
 	}
-	else if (legendColourScheme == "P") { pythonScript = pythonScript + "gray"; }
+	else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
 	pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak
 		+ "ax.set_xlim(-0.5, lmax_rows-.5)" + lineBreak
@@ -109,28 +109,39 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		+ "lvalues_sums = [sum([r[i] for r in lvalues]) for i in range(lmax_rows)]" + lineBreak
 		+ "lvalues_norm = [[v/lvalues_sums[i] for i, v in enumerate(row)] for row in lvalues]" + lineBreak
 		+ "fig, ax = plt.subplots(1, figsize=(4, 20))" + lineBreak
-		+ "for row_num in range(lmax_cols):" + lineBreak
-		+ tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom=[sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width=1, edgecolor='#000000',  color=[plt.get_cmap('";
+		+ "for row_num in range(lmax_cols):" + lineBreak;
 
-	if (legendColourScheme == "F")
+	if (legendColourScheme != "P")
 	{
-		pythonScript = pythonScript + "Paired";
+		pythonScript = pythonScript + tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+
+		// add colour spectrum type
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
+		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
+
+		// add general python scripting
+		pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak;
+
 	}
-	else if (legendColourScheme == "C")
+	if (legendColourScheme == "P")
 	{
-		pythonScript = pythonScript + "Set1";
-	}
-	else if (legendColourScheme == "G")
-	{
-		pythonScript = pythonScript + "gray";
-	}
-	else if (legendColourScheme == "P")
-	{
-		pythonScript = pythonScript + "gray";
+		pythonScript = pythonScript + tab + "bars = ax.bar(range(lmax_rows), values_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+
+		// add colour spectrum type
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
+		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
+
+		// add general python scripting
+		pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak
+			+ tab + "for bar, pattern in zip(bars, values_pattern[row_num]):" + lineBreak
+			+ tab + tab + "bar.set_hatch(pattern)" + lineBreak;
 	}
 
-	pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak
-		+ "ax.set_xlim(-0.5, lmax_rows-.5)" + lineBreak
+		pythonScript = pythonScript + "ax.set_xlim(-0.5, lmax_rows-.5)" + lineBreak
 		+ "ax.set_xticks([])" + lineBreak
 		+ "ax.set_yticks([])" + lineBreak
 		+ "ax.set_ylim(0, 1)" + lineBreak
@@ -153,11 +164,11 @@ std::string c_LegendCreation::colourSchemeChooser()
 	// Ask for colour or pattern scheme
 	do
 	{
-		std::cout << "Which colour scheme would you like: \n"
+		std::cout << "\nWhich colour scheme would you like: \n"
 			<< "\t (F)ull Colour \n"
 			<< "\t (C)olourblind Friendly \n"
-			<< "\t (G)rey Scale \n";
-		// << "\t (P)atterns \n";
+			<< "\t (G)rey Scale \n"
+		    << "\t (P)atterns \n";
 		std::cin >> legendColourScheme;
 	} while (legendColourScheme != "F"
 		&& legendColourScheme != "C"
@@ -191,14 +202,14 @@ void c_LegendCreation::colourSchemeLoader(int legendItemCount)
 
 	else if (legendColourScheme == "G")
 	{
-		selectedColourScheme[0] = 0;
-		for (int i = 1; i < legendItemCount; i++) { selectedColourScheme[i] = 225 / i; }
+		selectedColourScheme[0] = 225/legendItemCount;
+		for (int i = 2; i < legendItemCount; i++) { selectedColourScheme[i] = 225/legendItemCount * i; }
 	}
 
 	else if (legendColourScheme == "P")
 	{
-		selectedColourScheme[0] = 0;
-		for (int i = 1; i < legendItemCount; i++) { selectedColourScheme[i] = 225 / i; }
+		selectedColourScheme[0] = 225/legendItemCount;
+		for (int i = 2; i < legendItemCount; i++) { selectedColourScheme[i] = 225 / legendItemCount * i; }
 	}
 }
 

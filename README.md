@@ -96,7 +96,7 @@ This option allows you to set (or change) the colour scheme of your visualisatio
 
 + (F)ull colour, using MatPlotLib *Paired*, allowing 9 values
 + (C)olourblind friendly, using MatPlotLib *Set1*, allowing 5 values
-+ (G)reyscale, using MatPlotLib *gray*, allowing 10 values
++ (G)reyscale, using MatPlotLib *Greys*, allowing 10 values
 
 If you do not configure this option, you will be prompted to do so the first time you create a visualisation. You must use this option if you wish to change the colour scheme during subsequent runs.
 

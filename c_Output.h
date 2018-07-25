@@ -11,6 +11,7 @@ class c_Output
 
 private:
 	std::string colouriser(int g, int columnlist, int articlelist, std::string colourFlag);
+	std::string patterniser(int g, int columnlist, int articlelist, std::string colourFlag);
 	std::string wordCountiser(int g, int columnlist, int articlelist);
 	std::string labeliser(int g, int columnlist, int articlelist);
 	int findmaxarticleno(int g);
