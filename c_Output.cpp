@@ -78,18 +78,6 @@ std::string c_Output::patterniser(int g, int columnlist, int articlelist, std::s
 	int currart = articlelist; // first article to process (last one entered)
 	int flagInt = 0;
 	int currcol = 0;
-	std::vector <std::string> patternScheme;
-	
-	patternScheme.push_back("\' \'");
-	patternScheme.push_back("\'\\\\\'");
-	patternScheme.push_back("\'||\'");
-	patternScheme.push_back("\'//\'");
-	patternScheme.push_back("\'+\'");
-	patternScheme.push_back("\'-\'");
-	patternScheme.push_back("\'=\'");
-	patternScheme.push_back("\'*\'");
-	patternScheme.push_back("\'o\'");
-	patternScheme.push_back("\'O\'");
 
 	while (currart >= 0)
 	{
@@ -112,7 +100,7 @@ std::string c_Output::patterniser(int g, int columnlist, int articlelist, std::s
 				{
 					if (key_value == legendInstance.legendEntries[i].keyCharacter)
 					{
-						pagedata = pagedata + patternScheme[i]; // use legend colour
+						pagedata = pagedata + "\'" + legendInstance.patternScheme[i] + "\'" ; // use legend colour
 					}
 				}
 			}

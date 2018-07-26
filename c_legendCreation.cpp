@@ -12,20 +12,25 @@
 
 void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::string inputDirectory)
 {
+	// Size legend boxes for vertical legend
 	int block = 250 / legendItemCount;
 
+	// Begin python script
 	std::string pythonScript = "import matplotlib.pyplot as plt" + lineBreak
 		+ "import numpy as np" + lineBreak
 		+ "lvalues = [[";
 
+	// Create legend boxes
 	for (int i = 0; i < legendItemCount; i++)
 	{
 		pythonScript = pythonScript + std::to_string(block);
 		if (i+1 != legendItemCount) { pythonScript = pythonScript + ","; }
 	}
 
-	pythonScript = pythonScript + "]]" + lineBreak
-		+ "lvalues_colour =[[";
+	pythonScript = pythonScript + "]]" + lineBreak;
+	
+	// Create legend colours
+	pythonScript = pythonScript + "lvalues_colour =[[";
 
 	for (int i = 0; i < legendItemCount; i++)
 	{
@@ -33,84 +38,41 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		if (i+1 != legendItemCount){pythonScript = pythonScript + ","; }
 	}
 
-
-	pythonScript = pythonScript + "]]" + lineBreak
-		+ "lvalues_text = [[";
+	pythonScript = pythonScript + "]]" + lineBreak;
+		
+	// Create legend labels
+	pythonScript = pythonScript + "lvalues_text = [[";
 
 	for (size_t i = 0; i < legendEntries.size(); i++)
 	{
 		pythonScript = pythonScript + "'" + legendEntries[i].keyWord;
-		if (i+1 < legendItemCount) { pythonScript = pythonScript + "', "; }
+		if (i+1 < size_t(legendItemCount)) { pythonScript = pythonScript + "', "; }
 	}
 
-	pythonScript = pythonScript + "']]" + lineBreak
-		+ "lmax_cols = len(lvalues)" + lineBreak
+	pythonScript = pythonScript + "']]" + lineBreak;
+	
+	// Add Patterns Data, if required
+	if (legendColourScheme == "P")
+	{
+		pythonScript = pythonScript + "lvalues_pattern = [[";
+
+		for (size_t i = 0; i < legendEntries.size(); i++)
+		{
+			pythonScript = pythonScript + "'" + patternScheme[i];
+			if (i + 1 < size_t(legendItemCount)) { pythonScript = pythonScript + "', "; }
+		}
+		pythonScript = pythonScript + "']]" + lineBreak;
+	}
+
+	// Add in standard python scripting
+	pythonScript = pythonScript + "lmax_cols = len(lvalues)" + lineBreak
 		+ "lmax_rows = len(lvalues[0])" + lineBreak
 		+ "lvalues_sums = [sum([r[i] for r in lvalues]) for i in range(lmax_rows)]" + lineBreak
 		+ "lvalues_norm = [[v/lvalues_sums[i] for i, v in enumerate(row)] for row in lvalues]" + lineBreak
 		+ "fig, ax = plt.subplots(1, figsize=(50, 2))" + lineBreak
-		+ "for row_num in range(lmax_cols):" + lineBreak
-		+ tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom=[sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width=1, edgecolor='#000000',  color=[plt.get_cmap('";
-
-	if (legendColourScheme == "F")
-	{
-		pythonScript = pythonScript + "Paired";
-	}
-	else if (legendColourScheme == "C")
-	{
-		pythonScript = pythonScript + "Set1";
-	}
-	else if (legendColourScheme == "G")
-	{
-		pythonScript = pythonScript + "Greys";
-	}
-	else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
-
-	pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak
-		+ "ax.set_xlim(-0.5, lmax_rows-.5)" + lineBreak
-		+ "ax.set_xticks([])" + lineBreak
-		+ "ax.set_yticks([])" + lineBreak
-		+ "ax.set_ylim(0, 1)" + lineBreak
-		+ "for x in range(lmax_rows):" + lineBreak
-		+ tab + "for y in range(lmax_cols):" + lineBreak
-		+ tab + tab + "if lvalues[y][x] != 0.0:" + lineBreak
-		+ tab + tab + tab + "ax.text(x, y + .5, lvalues_text[y][x], fontsize = 16, ha='center', va='center', bbox=dict(facecolor='white', edgecolor='white', boxstyle='round,pad=.1'))" + lineBreak
-		+ "plt.savefig('Legend_Horizontal.png', bbox_inches='tight')" + lineBreak
-		+ "lvalues = [";
-
-	for (int i = 0; i < legendItemCount; i++)
-	{
-		pythonScript = pythonScript + "[" + std::to_string(block);
-		if (i + 1 != legendItemCount) { pythonScript = pythonScript + "],"; }
-	}
-
-	pythonScript = pythonScript + "]]" + lineBreak
-		+ "lvalues_colour =[";
-
-	for (int i = 0; i < legendItemCount; i++)
-	{
-		pythonScript = pythonScript + "[" + std::to_string(selectedColourScheme[i]);
-		if (i+1 != legendItemCount) { pythonScript = pythonScript + "],"; }
-	}
-
-	
-	pythonScript = pythonScript + "]]" + lineBreak
-		         + "lvalues_text = [";
-
-	for (size_t i = 0; i < legendEntries.size(); i++)
-	{
-		pythonScript = pythonScript + "['" + legendEntries[i].keyWord;
-		if (i+1 != legendItemCount) { pythonScript = pythonScript + "'],"; }
-	}
-
-	pythonScript = pythonScript + "']]" + lineBreak
-		+ "lmax_cols = len(lvalues)" + lineBreak
-		+ "lmax_rows = len(lvalues[0])" + lineBreak
-		+ "lvalues_sums = [sum([r[i] for r in lvalues]) for i in range(lmax_rows)]" + lineBreak
-		+ "lvalues_norm = [[v/lvalues_sums[i] for i, v in enumerate(row)] for row in lvalues]" + lineBreak
-		+ "fig, ax = plt.subplots(1, figsize=(4, 20))" + lineBreak
 		+ "for row_num in range(lmax_cols):" + lineBreak;
-
+	
+	// Colourise without patterns
 	if (legendColourScheme != "P")
 	{
 		pythonScript = pythonScript + tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
@@ -122,12 +84,14 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
 		// add general python scripting
-		pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak;
+		pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak;
 
 	}
-	if (legendColourScheme == "P")
+
+	// OR Colourise and add pattern overlay, if required
+	else if (legendColourScheme == "P")
 	{
-		pythonScript = pythonScript + tab + "bars = ax.bar(range(lmax_rows), values_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+		pythonScript = pythonScript + tab + "bars = ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 		// add colour spectrum type
 		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
@@ -136,11 +100,112 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
 		// add general python scripting
-		pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak
-			+ tab + "for bar, pattern in zip(bars, values_pattern[row_num]):" + lineBreak
+		pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak
+			+ tab + "for bar, pattern in zip(bars, lvalues_pattern[row_num]):" + lineBreak
 			+ tab + tab + "bar.set_hatch(pattern)" + lineBreak;
 	}
 
+	// Complete python script
+	pythonScript = pythonScript + "ax.set_xlim(-0.5, lmax_rows-.5)" + lineBreak
+		+ "ax.set_xticks([])" + lineBreak
+		+ "ax.set_yticks([])" + lineBreak
+		+ "ax.set_ylim(0, 1)" + lineBreak
+		+ "for x in range(lmax_rows):" + lineBreak
+		+ tab + "for y in range(lmax_cols):" + lineBreak
+		+ tab + tab + "if lvalues[y][x] != 0.0:" + lineBreak
+		+ tab + tab + tab + "ax.text(x, y + .5, lvalues_text[y][x], fontsize = 16, ha='center', va='center', bbox=dict(facecolor='white', edgecolor='white', boxstyle='round,pad=.1'))" + lineBreak
+		+ "plt.savefig('Legend_Horizontal.png', bbox_inches='tight')" + lineBreak;
+
+	// Begin horizontal legend with box sizes
+	pythonScript = pythonScript + "lvalues = [";
+
+	for (int i = 0; i < legendItemCount; i++)
+	{
+		pythonScript = pythonScript + "[" + std::to_string(block);
+		if (i + 1 != legendItemCount) { pythonScript = pythonScript + "],"; }
+	}
+
+	pythonScript = pythonScript + "]]" + lineBreak;
+
+	// Add colour values
+	pythonScript = pythonScript + "lvalues_colour =[";
+
+	for (int i = 0; i < legendItemCount; i++)
+	{
+		pythonScript = pythonScript + "[" + std::to_string(selectedColourScheme[i]);
+		if (i+1 != legendItemCount) { pythonScript = pythonScript + "],"; }
+	}
+
+	
+	pythonScript = pythonScript + "]]" + lineBreak;
+
+	// Add labels
+	pythonScript = pythonScript + "lvalues_text = [";
+
+	for (size_t i = 0; i < legendEntries.size(); i++)
+	{
+		pythonScript = pythonScript + "['" + legendEntries[i].keyWord;
+		if (i+1 != legendItemCount) { pythonScript = pythonScript + "'],"; }
+	}
+
+	pythonScript = pythonScript + "']]" + lineBreak;
+
+	// Add Patterns Data, if required
+	if (legendColourScheme == "P")
+	{
+		pythonScript = pythonScript + "lvalues_pattern = [";
+
+		for (size_t i = 0; i < legendEntries.size(); i++)
+		{
+			pythonScript = pythonScript + "['" + patternScheme[i];
+			if (i + 1 < size_t(legendItemCount)) { pythonScript = pythonScript + "'],"; }
+		}
+
+		pythonScript = pythonScript + "']]" + lineBreak;
+	}
+	
+	// Add standard python scripting
+	pythonScript = pythonScript + "lmax_cols = len(lvalues)" + lineBreak
+		+ "lmax_rows = len(lvalues[0])" + lineBreak
+		+ "lvalues_sums = [sum([r[i] for r in lvalues]) for i in range(lmax_rows)]" + lineBreak
+		+ "lvalues_norm = [[v/lvalues_sums[i] for i, v in enumerate(row)] for row in lvalues]" + lineBreak
+		+ "fig, ax = plt.subplots(1, figsize=(4, 20))" + lineBreak
+		+ "for row_num in range(lmax_cols):" + lineBreak;
+
+	// Colourise legend
+	if (legendColourScheme != "P")
+	{
+		pythonScript = pythonScript + tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+
+		// add colour spectrum type
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
+		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
+
+		// add general python scripting
+		pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak;
+
+	}
+
+	// Colourise legend with pattern, if required
+	else if (legendColourScheme == "P")
+	{
+		pythonScript = pythonScript + tab + "bars = ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
+
+		// add colour spectrum type
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
+		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
+
+		// add general python scripting
+		pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak
+			+ tab + "for bar, pattern in zip(bars, lvalues_pattern[row_num]):" + lineBreak
+			+ tab + tab + "bar.set_hatch(pattern)" + lineBreak;
+	}
+
+	// Complete legend code
 		pythonScript = pythonScript + "ax.set_xlim(-0.5, lmax_rows-.5)" + lineBreak
 		+ "ax.set_xticks([])" + lineBreak
 		+ "ax.set_yticks([])" + lineBreak
@@ -190,13 +255,11 @@ void c_LegendCreation::colourSchemeLoader(int legendItemCount)
 	// Set Colour Scheme
 	if (legendColourScheme == "F")
 	{
-		int fullColour[9] = { 0,2,4,6,8,10,1,3,5 };
 		for (size_t i = 0; i < 9; i++) { selectedColourScheme[i] = fullColour[i]; }
 	}
 
 	else if (legendColourScheme == "C")
 	{
-		int colourblind[5] = { 0,1,5,6,8 };
 		for (size_t i = 0; i < 5; i++) { selectedColourScheme[i] = colourblind[i]; }
 	}
 
