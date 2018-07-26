@@ -12,7 +12,7 @@
 
 void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::string inputDirectory)
 {
-	// Size legend boxes for vertical legend
+	// Size legend boxes for horizontal legend
 	int block = 250 / legendItemCount;
 
 	// Begin python script
@@ -116,7 +116,7 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		+ tab + tab + tab + "ax.text(x, y + .5, lvalues_text[y][x], fontsize = 16, ha='center', va='center', bbox=dict(facecolor='white', edgecolor='white', boxstyle='round,pad=.1'))" + lineBreak
 		+ "plt.savefig('Legend_Horizontal.png', bbox_inches='tight')" + lineBreak;
 
-	// Begin horizontal legend with box sizes
+	// Begin vertical legend with box sizes
 	pythonScript = pythonScript + "lvalues = [";
 
 	for (int i = 0; i < legendItemCount; i++)
@@ -266,13 +266,13 @@ void c_LegendCreation::colourSchemeLoader(int legendItemCount)
 	else if (legendColourScheme == "G")
 	{
 		selectedColourScheme[0] = 225/legendItemCount;
-		for (int i = 2; i < legendItemCount; i++) { selectedColourScheme[i] = 225/legendItemCount * i; }
+		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i-1] = 225/legendItemCount * i; }
 	}
 
 	else if (legendColourScheme == "P")
 	{
-		selectedColourScheme[0] = 225/legendItemCount;
-		for (int i = 2; i < legendItemCount; i++) { selectedColourScheme[i] = 225 / legendItemCount * i; }
+		selectedColourScheme[0] = 150/legendItemCount;
+		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i-1] = 150 / legendItemCount * i; }
 	}
 }
 

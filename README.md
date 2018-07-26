@@ -1,4 +1,4 @@
-# Newspaper Dissector v.0.3.4.0
+# Newspaper Dissector v.0.3.5.0
 
 The *Newspaper Dissector* is visualisation software for categorising and visualising newspaper pages based on category and word count. Based upon code built at the Software Sustainability Institute's 2017 Collaboration Workshop with the support of Geraint Palmer and Vince Knight (Cardiff University).
 
@@ -82,11 +82,11 @@ The programme will then provide you with 3 options, plus the option to exit the 
 
 This options allows you to change which files the programme accesses and how it interprets them. 
 
-#### E) Main data file
+#### F) Main data file
 
 This options allows you to change the file name of the page/snippet data, as well as indicate if you have used text (from which a wordcount will be automatically calculated) or a numeric value in the final column.  By default, the programme expects a file named *data.tsv* which contains text in the final column.
 
-#### F) Legend data File
+#### G) Legend data File
 
 This options allows you to change the file name of the legend data or to manually enter labels and keys.  By default, the programme expects a file named *legend.tsv*.
 
@@ -97,14 +97,24 @@ This option allows you to set (or change) the colour scheme of your visualisatio
 + (F)ull colour, using MatPlotLib *Paired*, allowing 9 values
 + (C)olourblind friendly, using MatPlotLib *Set1*, allowing 5 values
 + (G)reyscale, using MatPlotLib *Greys*, allowing 10 values
++ (P)atterns, using MatPlotLib *Greys*, and a variety of patterns, allowing 10 values
 
 If you do not configure this option, you will be prompted to do so the first time you create a visualisation. You must use this option if you wish to change the colour scheme during subsequent runs.
 
 ### C) Create a visualisation
 
-This option create two python files, one containing the code to create the page visualisations and one to create the horizontal and vertical legend images.  It will then attempt to run both programmes and create the PNG images.  The programme is currently set to use the command "python" rather than "python3". If your python installation requires the later (or another variant) you will need to run these python snippets manually.
+This option create two python files, one containing the code to create the page visualisations and one to create the horizontal and vertical legend images.  It will then attempt to run both programmes and create the PNG images.  The programme is currently set to use the command "python" rather than "python3". If your python installation requires the later (or another variant) you will need to run the python command line configuration.
+
+### D) Configure the python command
+
+This option will allow you to replace *python* with another command in the final batch file. 
 
 ## Changelog
+
+**v.0.3.5.0**: 
+
++ Allow configuration of python command line
++ Improved patterns to avoid dark backgrounds
 
 **v.0.3.4.0**: 
 
@@ -126,7 +136,3 @@ This option create two python files, one containing the code to create the page 
 **v.0.2.2.0**: 
 
 + Fixed fatal error in compiled version
-
-## Upcoming Changes
-
-+ Allow configuration of python command line

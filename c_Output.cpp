@@ -382,8 +382,8 @@ void c_Output::graphicMaker(std::string colourFlag)
 	// create windows batch file to run python script, with "python" command
 	std::fstream batchFilename;
 	batchFilename.open("createGraphics.bat", std::fstream::app);
-	filename = "python legends.py" + lineBreak 
-		+ "python " + filename + lineBreak;
+	filename = pythonFlag + " legends.py" + lineBreak
+		+ pythonFlag + " " + filename + lineBreak;
 	batchFilename << filename;
 
 }

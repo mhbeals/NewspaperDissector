@@ -21,6 +21,10 @@ private:
 	std::string tab = "\t";
 
 public:
+	// Configuration flags
+	std::string pythonFlag = "python";
+	
+	// Functions
 	void graphicMaker(std::string colourFlag);	
 	
 };

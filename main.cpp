@@ -1,5 +1,5 @@
 // Newspaper Dissector
-// M. H. Beals (2018) v.0.3.3 [Software]
+// M. H. Beals (2018) v.0.3.5 [Software]
 
 // MIT License
 // Copyright(c) 2018 M. H. Beals
@@ -58,8 +58,9 @@ int main()
 		std::cout << "\nYou can:" << std::endl
 			<< "\t(a) Configure Data Files" << std::endl
 			<< "\t(b) Configure Visualisation" << std::endl
-			<< "\t(c) Create a Visualisation" << std::endl
-			<< "\t(d) Exit the Programme" << std::endl
+			<< "\t(c) Configure the Python Command" << std::endl
+			<< "\t(d) Create a Visualisation" << std::endl
+			<< "\t(e) Exit the Programme" << std::endl
 			<< "\nWhich would you like to do? ";
 		std::cin >> responseValue;
 
@@ -67,14 +68,16 @@ int main()
 		if (responseValue == "a")
 		{
 			std::cout << "\nWould you like to configure your:" << std::endl
-				<< "\t(e) Main Data File, currently set to " << inputFile << std::endl
-				<< "\t(f) Legend Data File, currently set to " << legendFile << std::endl
-				<< "\t(g) Return to the main menu" << std::endl
+				<< "\t(f) Main Data File, currently set to " << inputFile;
+			if (inputInstance.dataFlag == "T") { std::cout << ", a text-based data file" << std::endl; }
+			else if (inputInstance.dataFlag == "N") { std::cout << ", a data file with numeric size data" << std::endl; }
+			std::cout << "\t(g) Legend Data File, currently set to " << legendFile << std::endl
+				<< "\t(h) Return to the main menu" << std::endl
 				<< "\n\nWhich would you like to do? ";
 			std::cin >> responseValue;
 
 			// If they ask to configure the data file
-			if (responseValue == "e")
+			if (responseValue == "f")
 			{
 				// Collect input filename each time
 				std::cout << "\nWhat is the name of your input file? ";
@@ -94,7 +97,7 @@ int main()
 			}
 
 			// If they ask to configure the legend
-			if (responseValue == "f" || responseValue == "y")
+			if (responseValue == "g" || responseValue == "y")
 			{
 				std::cout << "\nWould you like to (l)oad or (m)anually create your legends? ";
 				std::cin >> responseValue;
@@ -124,8 +127,21 @@ int main()
 			colourFlag = legendInstance.colourSchemeChooser();
 		}
 
+		// If they ask to configure the python command.
+		else if (responseValue == "c")
+		{
+			std::cout << "\nThe programme is currently set to execute the python script using the command " << vectorInstance.pythonFlag << std::endl << "Would you like to change the command (y/n)? ";
+			std::cin >> responseValue;
+
+			if (responseValue == "y")
+			{
+				std::cout << "What should the command be? For example 'python3': " << std::endl;
+				std::cin >> vectorInstance.pythonFlag;
+			}
+		}
+
 		// If they ask to run the visualiser
-		else if (responseValue == "c") {
+		else if (responseValue == "d") {
 			{
 					// Set legend colourscheme
 					if (colourFlag == "S") 
@@ -162,14 +178,16 @@ int main()
 			}
 		}
 
-		else if (responseValue == "d") { return 0; }
+		// If they ask to exit the programme
+		else if (responseValue == "e") { return 0; }
 
+		// If they ask to do something that isn't an option
 		else { std::cout << std::endl << "I can't do that, Dave." << std::endl << std::endl; }
 
 	} while (responseValue != "a"
-		|| responseValue != "b"
-		|| responseValue != "c"
-		|| responseValue != "d"
+		&& responseValue != "b"
+		&& responseValue != "c"
+		&& responseValue != "d"
 		);
 
 	return 0;
