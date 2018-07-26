@@ -129,5 +129,4 @@ This option create two python files, one containing the code to create the page 
 
 ## Upcoming Changes
 
-+ Allow patterned colour schemes
 + Allow configuration of python command line
