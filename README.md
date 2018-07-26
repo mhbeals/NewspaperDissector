@@ -101,13 +101,13 @@ This option allows you to set (or change) the colour scheme of your visualisatio
 
 If you do not configure this option, you will be prompted to do so the first time you create a visualisation. You must use this option if you wish to change the colour scheme during subsequent runs.
 
-### C) Create a visualisation
+### C) Configure the python command
 
-This option create two python files, one containing the code to create the page visualisations and one to create the horizontal and vertical legend images.  It will then attempt to run both programmes and create the PNG images.  The programme is currently set to use the command "python" rather than "python3". If your python installation requires the later (or another variant) you will need to run the python command line configuration.
+This option will allow you to replace *python* with another command in the final batch file, for example, *python3*. 
 
-### D) Configure the python command
+### D) Create a visualisation
 
-This option will allow you to replace *python* with another command in the final batch file. 
+This option create two python files, one containing the code to create the page visualisations and one to create the horizontal and vertical legend images.  It will then attempt to run both programmes and create the PNG images.  The programme is currently set to use the command "python" rather than "python3". If your python installation requires the later (or another variant) you will need to run the python command line configuration (above).
 
 ## Changelog
 
