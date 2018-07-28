@@ -1,4 +1,4 @@
-# Newspaper Dissector v.0.3.5.0
+# Newspaper Dissector v.0.3.5.1
 
 The *Newspaper Dissector* is visualisation software for categorising and visualising newspaper pages based on category and word count. Based upon code built at the Software Sustainability Institute's 2017 Collaboration Workshop with the support of Geraint Palmer and Vince Knight (Cardiff University).
 
@@ -98,6 +98,8 @@ This option allows you to set (or change) the colour scheme of your visualisatio
 + (C)olourblind friendly, using MatPlotLib *Set1*, allowing 5 values
 + (G)reyscale, using MatPlotLib *Greys*, allowing 10 values
 + (P)atterns, using MatPlotLib *Greys*, and a variety of patterns, allowing 10 values
+
+Samples of these can be found [here](samples.md)
 
 If you do not configure this option, you will be prompted to do so the first time you create a visualisation. You must use this option if you wish to change the colour scheme during subsequent runs.
 
