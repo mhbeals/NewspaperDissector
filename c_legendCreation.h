@@ -37,7 +37,7 @@ public:
 	std::string legendColourScheme = "Q";
 	int fullColour[9] = { 0,2,4,6,8,10,1,3,5 };
 	int colourblind[5] = { 0,1,5,6,8 };
-	std::string patternScheme[10] = {" ", "\\\\", "||", "//", "+", "-", "=", "*", "o", "O"};
+	std::string patternScheme[10] = {" ", "\\\\", "||", "//", "+", "-", "=", "*", "o"};
 
 	// Functions
 	std::string legendQuery(std::string inputDirectory);

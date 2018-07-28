@@ -185,10 +185,8 @@ int main()
 		else { std::cout << std::endl << "I can't do that, Dave." << std::endl << std::endl; }
 
 	} while (responseValue != "a"
-		&& responseValue != "b"
-		&& responseValue != "c"
-		&& responseValue != "d"
+		|| responseValue != "b"
+		|| responseValue != "c"
+		|| responseValue != "d"
 		);
-
-	return 0;
 }
