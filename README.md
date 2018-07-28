@@ -113,6 +113,11 @@ This option create two python files, one containing the code to create the page 
 
 ## Changelog
 
+**v.0.3.5.1**: 
+
++ Bug fixes 
++ Add colour scheme samples
+
 **v.0.3.5.0**: 
 
 + Allow configuration of python command line
