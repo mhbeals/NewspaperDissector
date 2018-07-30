@@ -1,4 +1,4 @@
-# Newspaper Dissector v.0.3.5.1
+# Newspaper Dissector v.0.3.5.2
 
 The *Newspaper Dissector* is visualisation software for categorising and visualising newspaper pages based on category and word count. Based upon code built at the Software Sustainability Institute's 2017 Collaboration Workshop with the support of Geraint Palmer and Vince Knight (Cardiff University).
 
@@ -94,8 +94,8 @@ This options allows you to change the file name of the legend data or to manuall
 
 This option allows you to set (or change) the colour scheme of your visualisation. You currently have three options.  
 
-+ (F)ull colour, using MatPlotLib *Paired*, allowing 9 values
-+ (C)olourblind friendly, using MatPlotLib *Set1*, allowing 5 values
++ (F)ull colour, using MatPlotLib *hsv*, allowing 9 values
++ (C)olourblind friendly, using MatPlotLib *nipy_spectral*, allowing 5 values
 + (G)reyscale, using MatPlotLib *Greys*, allowing 10 values
 + (P)atterns, using MatPlotLib *Greys*, and a variety of patterns, allowing 10 values
 
@@ -112,6 +112,11 @@ This option will allow you to replace *python* with another command in the final
 This option create two python files, one containing the code to create the page visualisations and one to create the horizontal and vertical legend images.  It will then attempt to run both programmes and create the PNG images.  The programme is currently set to use the command "python" rather than "python3". If your python installation requires the later (or another variant) you will need to run the python command line configuration (above).
 
 ## Changelog
+
+**v.0.3.5.2**: 
+
++ Improved colourblind scheme
++ Updated samples
 
 **v.0.3.5.1**: 
 

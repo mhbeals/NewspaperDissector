@@ -322,22 +322,29 @@ void c_Output::graphicMaker(std::string colourFlag)
 			pythonScript = pythonScript + tab + "ax.bar(range(max_rows), values_norm[row_num], bottom = [sum([values_norm[i][j] for i in range(row_num)]) for j in range(max_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 			// add colour spectrum type
-			if (colourFlag == "F") { pythonScript = pythonScript + "Paired"; }
-			else if (colourFlag == "C") { pythonScript = pythonScript + "Set1"; }
+			if (colourFlag == "F") { pythonScript = pythonScript + "hsv"; }
+			else if (colourFlag == "C") { pythonScript = pythonScript + "nipy_spectral"; }
 			else if (colourFlag == "G") { pythonScript = pythonScript + "Greys"; }
 			else if (colourFlag == "P") { pythonScript = pythonScript + "Greys"; }
 
-			// add general python scripting
-			pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak;
-
+			if (colourFlag == "F")
+			{
+				// add general python scripting
+				pythonScript = pythonScript + "')(i) for i in values_colour[row_num]], alpha=0.5)" + lineBreak;
+			}
+			else
+			{
+				// add general python scripting
+				pythonScript = pythonScript + "')(i) for i in values_colour[row_num]])" + lineBreak;
+			}
 		}
 		if (colourFlag == "P")
 		{
 			pythonScript = pythonScript + tab + "bars = ax.bar(range(max_rows), values_norm[row_num], bottom = [sum([values_norm[i][j] for i in range(row_num)]) for j in range(max_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 			// add colour spectrum type
-			if (colourFlag == "F") { pythonScript = pythonScript + "Paired"; }
-			else if (colourFlag == "C") { pythonScript = pythonScript + "Set1"; }
+			if (colourFlag == "F") { pythonScript = pythonScript + "hsv"; }
+			else if (colourFlag == "C") { pythonScript = pythonScript + "nipy_spectral"; }
 			else if (colourFlag == "G") { pythonScript = pythonScript + "Greys"; }
 			else if (colourFlag == "P") { pythonScript = pythonScript + "Greys"; }
 
@@ -346,8 +353,8 @@ void c_Output::graphicMaker(std::string colourFlag)
 				+ tab + "for bar, pattern in zip(bars, values_pattern[row_num]):" + lineBreak
 				+ tab + tab + "bar.set_hatch(pattern)" + lineBreak;
 
-		}
 
+		}
 		pythonScript = pythonScript + "ax.set_xlim(-0.5, max_rows - 0.5)\nax.set_xticks([])\nax.set_yticks([])" + lineBreak
 			+ "ax.set_ylim(0, 1)\nfor x in range(max_rows) :\n\tfor y in range(max_cols) :" + lineBreak 
 			+ tab + tab + "if values[y][x] != 0.0:\n\t\t\t\tax.text(x, values_norm[y][x] / 2 + sum([values_norm[newy][x] for newy in range(y)]), values_text[y][x], fontsize = 10, ha='center', va='center', bbox=dict(facecolor='white', edgecolor='white', boxstyle='round,pad=.1'))" + lineBreak

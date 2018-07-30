@@ -78,13 +78,21 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		pythonScript = pythonScript + tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 		// add colour spectrum type
-		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
-		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "hsv"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "nipy_spectral"; }
 		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
 		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
-		// add general python scripting
-		pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak;
+		if (legendColourScheme == "F")
+		{
+			// add general python scripting
+			pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]], alpha=0.5)" + lineBreak;
+		}
+		else
+		{
+			// add general python scripting
+			pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak;
+		}
 
 	}
 
@@ -94,8 +102,8 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		pythonScript = pythonScript + tab + "bars = ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 		// add colour spectrum type
-		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
-		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "hsv"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "nipy_spectral"; }
 		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
 		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
@@ -178,13 +186,21 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		pythonScript = pythonScript + tab + "ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 		// add colour spectrum type
-		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
-		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "hsv"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "nipy_spectral"; }
 		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
 		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
-		// add general python scripting
-		pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak;
+		if (legendColourScheme == "F")
+		{
+			// add general python scripting
+			pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]], alpha=0.5)" + lineBreak;
+		}
+		else
+		{
+			// add general python scripting
+			pythonScript = pythonScript + "')(i) for i in lvalues_colour[row_num]])" + lineBreak;
+		}
 
 	}
 
@@ -194,8 +210,8 @@ void c_LegendCreation::legendCreator(std::vector<entry> legendEntries, std::stri
 		pythonScript = pythonScript + tab + "bars = ax.bar(range(lmax_rows), lvalues_norm[row_num], bottom = [sum([lvalues_norm[i][j] for i in range(row_num)]) for j in range(lmax_rows)], width = 1, edgecolor = '#000000', color = [plt.get_cmap('";
 
 		// add colour spectrum type
-		if (legendColourScheme == "F") { pythonScript = pythonScript + "Paired"; }
-		else if (legendColourScheme == "C") { pythonScript = pythonScript + "Set1"; }
+		if (legendColourScheme == "F") { pythonScript = pythonScript + "hsv"; }
+		else if (legendColourScheme == "C") { pythonScript = pythonScript + "nipy_spectral"; }
 		else if (legendColourScheme == "G") { pythonScript = pythonScript + "Greys"; }
 		else if (legendColourScheme == "P") { pythonScript = pythonScript + "Greys"; }
 
@@ -255,7 +271,8 @@ void c_LegendCreation::colourSchemeLoader(int legendItemCount)
 	// Set Colour Scheme
 	if (legendColourScheme == "F")
 	{
-		for (size_t i = 0; i < 9; i++) { selectedColourScheme[i] = fullColour[i]; }
+		selectedColourScheme[0] = 256 / legendItemCount;
+		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i - 1] = 256 / legendItemCount * i; }
 	}
 
 	else if (legendColourScheme == "C")
@@ -265,14 +282,14 @@ void c_LegendCreation::colourSchemeLoader(int legendItemCount)
 
 	else if (legendColourScheme == "G")
 	{
-		selectedColourScheme[0] = 225/legendItemCount;
-		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i-1] = 225/legendItemCount * i; }
+		selectedColourScheme[0] = 256/legendItemCount;
+		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i-1] = 256/legendItemCount * i; }
 	}
 
 	else if (legendColourScheme == "P")
 	{
-		selectedColourScheme[0] = 150/legendItemCount;
-		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i-1] = 150 / legendItemCount * i; }
+		selectedColourScheme[0] = 200/legendItemCount;
+		for (int i = 2; i < legendItemCount + 1; i++) { selectedColourScheme[i-1] = 200 / legendItemCount * i; }
 	}
 }
 

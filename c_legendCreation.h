@@ -35,8 +35,7 @@ public:
 
 	// Colour Scheme
 	std::string legendColourScheme = "Q";
-	int fullColour[9] = { 0,2,4,6,8,10,1,3,5 };
-	int colourblind[5] = { 0,1,5,6,8 };
+	int colourblind[5] = { 0,203,78,104,183 };
 	std::string patternScheme[10] = {" ", "\\\\", "||", "//", "+", "-", "=", "*", "o"};
 
 	// Functions
