@@ -1,3 +1,5 @@
+Although you can have any number of legend items between 1 and 10, these samples will give you an idea of the range of colours that will appear.
+
 ## 5-Colour Full Colour Variant
 <img src="/Samples/Legends/Colour_5_Legend_Vertical.png" title="5-Variant Full Colour" width="75px"/><img src="/Samples/Pages/Colour_5_1820_06_15_CaledonianMercury_1.png" title="5-Variant Full Colour" width="213px"/>
 
